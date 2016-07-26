@@ -1,0 +1,19 @@
+{
+  "name": "surveybackend",
+  "version": "1.0.0",
+  "description": "A restful backend for applying surveys to a group of people of an organization",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "restful",
+    "nopalcode"
+  ],
+  "author": "nopalcode",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
