@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 // custom controllers
 var users = require('./src/controllers/usercontroller');
 var survies = require('./src/controllers/surveycontroller');
+var questions = require('./src/controllers/questioncontroller');
 
 
 // use the native promise support
@@ -40,6 +41,15 @@ app.post('/users', users.createUser);
 // survey -meta info-
 app.post('/survies', survies.createSurvey);
 app.get('/survies/:author/:page', survies.list);
+app.post('/questions/:author/:survey', questions.create);
+app.get('/questions/:author/:survey/:page', questions.list);
+// TODO: add options to the questions
+// TODO: update option
+// TODO: update question
+// TODO: update survey
+// TODO: assign survey to users (basically by id)
+// TODO: assign survey by group
+// TODO: answer questions by user and survey
 
 // server start!
 app.listen(3030);

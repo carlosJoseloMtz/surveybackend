@@ -30,6 +30,7 @@ var surveyController = {
 
   list: function (req, res) {
     var page = req.params.page;
+    // TODO: validate that the author being sent matches with the one on the sesion
     var author = req.params.author;
     // the default elements by page is 10
     var elementsByPage = 10;
@@ -47,7 +48,7 @@ var surveyController = {
         }
 
         return res.json(new Responses.listSuccess(survies));
-      })
+      });
   }
 };
 
