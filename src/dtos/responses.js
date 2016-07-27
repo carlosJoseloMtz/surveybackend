@@ -1,9 +1,13 @@
 
 
-var transactionSuccess = function (objId) {
-  return { id: objId, 'status': 'ok'};
+var responses = {
+  transactionSuccess: function (objId) {
+    return { id: objId, 'status': 'ok' };
+  },
+
+  transactionError: function (objId) {
+    return { id: objId, 'status': 'failed', message: 'Error while trying to write object' };
+  }
 }
 
-var transactionError = function (objId) {
-  return { id: objId, 'status': 'failed', message: 'Error while trying to write object'};
-}
+module.exports = responses;

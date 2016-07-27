@@ -4,8 +4,6 @@ var Responses = require('../dtos/responses');
 var userController = {
 
   createUser: function (req, res) {
-    console.log('user information');
-    console.log(req.body);
 
     var _email = req.body.email,
         _password = req.body.password,
@@ -29,11 +27,10 @@ var userController = {
       if (err) {
         console.error('could not save the user');
         console.error(err);
-        return res.json({ status: 'failed', message: 'Error while trying to write object'});
+        return res.json(new Responses.transactionError());
       }
 
-      // TODO: encapsulate the responses using the dtos
-      res.json({ id: usr.id, status: 'ok'});
+      res.json(new Responses.transactionSuccess(usr.id));
     });
   }
 

@@ -4,15 +4,27 @@ var Schema = mongoose.Schema;
 // define the user schema
 // will consider only the employee and admin groups for now
 var UserSchema = new Schema({
-  email: String,
-  password: String,
-  name: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
   title: {
     type: String,
+    required: true,
     enum: ['Developer', 'Manager', 'Team Lead', 'Other']
   },
   userGroup: {
     type: String,
+    required: true,
     enum: ['employee', 'admin']
   },
   // the assigned survies
