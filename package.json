@@ -1,5 +1,6 @@
 {
   "name": "surveybackend",
+  "private": true,
   "version": "1.0.0",
   "description": "A restful backend for applying surveys to a group of people of an organization",
   "main": "server.js",
