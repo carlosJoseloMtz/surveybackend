@@ -8,8 +8,9 @@ var bodyParser = require('body-parser');
 // TODO: handle database connection error
 // TODO: add token base auth
 
-// custom implementation
-var users = require('./src/controllers/usercontroller.js');
+// custom controllers
+var users = require('./src/controllers/usercontroller');
+var survies = require('./src/controllers/surveycontroller');
 
 
 // use the native promise support
@@ -31,8 +32,14 @@ app.get('/', function (req, res) {
 });
 
 // define all the routes
-app.post('/users', users.createUser);
 
+// users routes
+app.post('/users', users.createUser);
+// TODO implement the rest of the user roots for controlling the groups and access
+
+// survey -meta info-
+app.post('/survies', survies.createSurvey);
+app.get('/survies/:author/:page', survies.list);
 
 // server start!
 app.listen(3030);
