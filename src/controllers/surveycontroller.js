@@ -30,24 +30,40 @@ var surveyController = {
 
   list: function (req, res) {
     var page = req.params.page;
-    // TODO: validate that the author being sent matches with the one on the sesion
-    var author = req.params.author;
+    // TODO: validate that the user on the sesion is from admin group
+    var user = req.params.author;
     // the default elements by page is 10
     var elementsByPage = 10;
     var _skip = (!page ? 0 : page) * elementsByPage;
 
     Survey.
-      find({ createdBy: author }).
+      find({}).
       sort("-updated").
       skip(_skip).
       limit(elementsByPage).exec(function (err, survies) {
         if (err) {
-          console.error('could not list survies for user', author);
+          console.error('could not list survies for user', user);
           console.error(err);
           return res.json(new Responses.transactionError());
         }
 
         return res.json(new Responses.listSuccess(survies));
+      });
+  },
+
+  getById: function (req, res) {
+    var _survey = req.params.survey;
+    // TODO: validate that the logged user belongs to admin user or has this one
+    // assigned
+    Survey.
+      findById(_survey, function (err, srv) {
+        if (err) {
+          console.error('could not retrieve survey by id', _survey);
+          console.error(err);
+          return res.json(new Responses.transactionError());
+        }
+
+        return res.json(new Responses.modelSuccess(srv));
       });
   }
 };

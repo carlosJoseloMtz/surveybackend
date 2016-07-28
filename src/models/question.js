@@ -24,6 +24,11 @@ var QuestionSchema = new Schema({
     ref: 'User',
     required: true
   },
+  // indicates if the answer can be empty
+  canBeEmpty: {
+    type: Boolean,
+    default: true
+  },
   options: [ { type: String, required: true } ]
 });
 

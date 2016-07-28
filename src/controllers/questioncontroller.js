@@ -4,7 +4,7 @@ var Question = require('../models/question');
 var questionController = {
 
   create: function (req, res) {
-    // TODO: validate the author sent matches with the one on the session
+    // TODO: validate the author on the session is on admin group
     var _survey = req.params.survey,
         _author = req.params.author,
         _question = req.body.question,
