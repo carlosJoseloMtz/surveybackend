@@ -3,6 +3,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 
 // TODO: setup morgan logger
 // TODO: handle database connection error
@@ -12,8 +13,6 @@ var bodyParser = require('body-parser');
 var users = require('./src/controllers/usercontroller');
 var survies = require('./src/controllers/surveycontroller');
 var questions = require('./src/controllers/questioncontroller');
-var options = require('./src/controllers/optioncontroller');
-
 
 // use the native promise support
 mongoose.Promise = global.Promise;
@@ -26,6 +25,7 @@ mongoose.connect('mongodb://localhost/survey_db');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(morgan('combined'));
 
 
 // routes
@@ -44,8 +44,8 @@ app.post('/survies', survies.createSurvey);
 app.get('/survies/:author/:page', survies.list);
 app.post('/questions/:author/:survey', questions.create);
 app.get('/questions/:author/:survey/:page', questions.list);
-app.post('/options/:question', options.create);
-app.get('/options/:question', options.findBySurvey);
+// add an option to question
+app.post('/options/:question', questions.addOption);
 // TODO: update question
 // TODO: update survey
 // TODO: assign survey to users (basically by id)

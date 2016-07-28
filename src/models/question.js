@@ -23,7 +23,8 @@ var QuestionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }
+  },
+  options: [ { type: String, required: true } ]
 });
 
 module.exports = mongoose.model('Question', QuestionSchema);

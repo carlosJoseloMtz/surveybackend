@@ -29,6 +29,27 @@ var questionController = {
     });
   },
 
+  addOption: function (req, res) {
+    // TODO: validate that the author being sent matches with the one on the sesion
+    var _author = req.params.author,
+        _question = req.params.question;
+
+    var _option = req.body.option;
+
+    Question.
+      findByIdAndUpdate(_question,
+        { $push: { options: _option } },
+        function (err, nOpt) {
+          if (err) {
+            console.error('error while trying to add an option for question', _question);
+            console.error(err);
+            return res.json(new Response.transactionError());
+          }
+
+          return res.json(new Responses.transactionSuccess());
+        });
+  },
+
   list: function (req, res) {
     var page = req.params.page;
     // TODO: validate that the author being sent matches with the one on the sesion
