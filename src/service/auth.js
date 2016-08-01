@@ -54,10 +54,33 @@ var auth = {
     }
 
     if (payload.exp <= moment().unix()) {
-      return re.status(401).json({message: 'Token already expired'});
+      return res.status(401).json({message: 'Token already expired'});
     }
 
     req.user = payload.sub;
+    next();
+  },
+
+  /**
+  * Defines the mappings that will be used only by the admin group.
+  */
+  secureAdmin: function () {
+    var router = express.Router();
+    // contains all the mappings that require the user to be admin
+    var adminMapping =
+      ['/api/survies', '/api/survies/list/:page',
+        '/api/survies/:survey'];
+    router.all(adminMapping, auth._validateAdminUser);
+    return router;
+  },
+
+  /**
+  * Simply validates the user group for given token is admin.
+  */
+  _validateAdminUser: function (req, res, next) {
+    if (req.user.group != 'admin') {
+      return res.json({status: 'failed', message: 'You don not have enought privileges'});
+    }
     next();
   }
 };

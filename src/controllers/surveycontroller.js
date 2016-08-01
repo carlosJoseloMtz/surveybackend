@@ -31,8 +31,7 @@ var surveyController = {
 
   list: function (req, res) {
     var page = req.params.page;
-    // TODO: validate that the user on the sesion is from admin group
-    var user = req.params.author;
+    var user = req.user;
     // the default elements by page is 10
     var elementsByPage = 10;
     var _skip = (!page ? 0 : page) * elementsByPage;
