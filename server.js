@@ -4,8 +4,6 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var jwt = require('jwt-simple');
-var moment = require('moment');
 var appAuth = require('./src/service/auth');
 
 // TODO: handle database connection error

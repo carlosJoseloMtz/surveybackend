@@ -1,6 +1,7 @@
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var express = require('express');
+var appConfig = require('../../config');
 
 var auth = {
 
@@ -17,10 +18,12 @@ var auth = {
     var payload = {
       sub: _usr,
       iat: moment().unix(),
-      exp: moment().add(14, "days").unix()
+      exp: moment().add(
+        appConfig.auth.expirationTime,
+        appConfig.auth.expirationFactor).unix()
     };
 
-    return jwt.encode(payload, '__PLEASE_REFACTOR_ME__');
+    return jwt.encode(payload, appConfig.auth.secureToken);
   },
 
   /**
@@ -43,7 +46,7 @@ var auth = {
     var token = req.headers.authorization;
 
     try {
-      var payload = jwt.decode(token, '__PLEASE_REFACTOR_ME__');
+      var payload = jwt.decode(token, appConfig.auth.secureToken);
     } catch (err) {
       console.error('could not parse token', token);
       console.error(err);
