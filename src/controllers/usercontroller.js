@@ -1,25 +1,8 @@
 var User = require('../models/user');
 var Responses = require('../dtos/responses');
-var jwt = require('jwt-simple');
-var moment = require('moment');
+var authService = require('../service/auth');
 
 var userController = {
-
-  _generateToken: function (user) {
-    var _usr = {
-      uid: user.id,
-      email: user.email,
-      group: user.userGroup,
-    };
-
-    var payload = {
-      sub: _usr,
-      iat: moment().unix(),
-      exp: moment().add(14, "days").unix()
-    };
-
-    return jwt.encode(payload, '__PLEASE_REFACTOR_ME__');
-  },
 
   createUser: function (req, res) {
 
@@ -71,7 +54,7 @@ var userController = {
             return res.json(new Responses.loginError());
           }
 
-          var _token = userController._generateToken(usr);
+          var _token = authService.createToken(usr);
           return res.json(new Responses.loginSuccess(usr.email, usr.name, usr.userGroup, _token));
         });
 
