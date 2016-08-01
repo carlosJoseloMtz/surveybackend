@@ -1,3 +1,5 @@
+var express = require('express');
+
 var User = require('../models/user');
 var Responses = require('../dtos/responses');
 var authService = require('../service/auth');
@@ -59,9 +61,18 @@ var userController = {
         });
 
       });
+  },
+
+  _addMappings: function () {
+    var router = express.Router();
+    // userController
+    router.post('/users', userController.createUser);
+    router.post('/login', userController.login);
+    // TODO: add all the admin handling and more
+    return router;
   }
 
 };
 
 
-module.exports = userController;
+module.exports = userController._addMappings;

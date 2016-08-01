@@ -32,19 +32,9 @@ app.use(appAuth.secureMapping('/api/*'));
 
 // routes
 
-// users routes
-app.post('/users', users.createUser);
-app.post('/login', users.login);
-
-// TODO implement the rest of the user roots for controlling the groups and access
-// survey -meta info-
-app.post('/api/survies', survies.createSurvey);
-app.get('/api/survies/list/:page', survies.list);
-app.get('/api/survies/:survey', survies.getById);
-app.post('/api/questions/:survey', questions.create);
-app.get('/api/questions/list/:survey/:page', questions.list);
-// add an option to question
-app.post('/api/options/:question', questions.addOption);
+app.use(users());
+app.use(survies());
+app.use(questions());
 // TODO: update question
 // TODO: update survey
 // TODO: assign survey to users (basically by id)

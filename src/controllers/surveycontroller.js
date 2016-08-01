@@ -1,3 +1,4 @@
+var express = require('express');
 
 var Responses = require('../dtos/responses');
 var Survey = require('../models/survey');
@@ -65,7 +66,18 @@ var surveyController = {
 
         return res.json(new Responses.modelSuccess(srv));
       });
+  },
+
+  /**
+  * Adds all the mappings handled by this controller.
+  */
+  _addMappings: function () {
+    var router = express.Router();
+    router.post('/api/survies', surveyController.createSurvey);
+    router.get('/api/survies/list/:page', surveyController.list);
+    router.get('/api/survies/:survey', surveyController.getById);
+    return router;
   }
 };
 
-module.exports = surveyController;
+module.exports = surveyController._addMappings;

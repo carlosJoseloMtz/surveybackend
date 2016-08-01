@@ -1,3 +1,5 @@
+var express = require('express');
+
 var Responses = require('../dtos/responses');
 var Question = require('../models/question');
 
@@ -72,8 +74,17 @@ var questionController = {
 
         return res.json(new Responses.listSuccess(questions));
       });
+  },
+
+  _addMapping: function () {
+    var router = express.Router();
+    router.post('/api/questions/:survey', questionController.create);
+    router.get('/api/questions/list/:survey/:page', questionController.list);
+    // add an option to question
+    router.post('/api/options/:question', questionController.addOption);
+    return router;
   }
 };
 
 
-module.exports = questionController;
+module.exports = questionController._addMapping;
